@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tecker <tecker@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tomecker <tomecker@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:00:06 by tecker            #+#    #+#             */
-/*   Updated: 2024/12/03 15:04:24 by tecker           ###   ########.fr       */
+/*   Updated: 2024/12/03 19:22:16 by tomecker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <iomanip>
 #include <climits>
 #include <math.h>
+#include <cfloat>
 
 class ScalarConverter
 {

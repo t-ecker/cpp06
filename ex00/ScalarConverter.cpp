@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tecker <tecker@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tomecker <tomecker@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:00:02 by tecker            #+#    #+#             */
-/*   Updated: 2024/12/03 15:26:40 by tecker           ###   ########.fr       */
+/*   Updated: 2024/12/04 00:37:26 by tomecker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ enum values
 	DOUBLE
 };
 
+int	get_precision(const std::string str, int type)
+{
+	int res = str.length() - str.find('.') - 1;
+	if (type == FLOAT)
+		return (std::min(res, FLT_DIG));
+	else
+		return (std::min(res, DBL_DIG));
+}
+
 int	get_type(const std::string str)
 {
 	size_t pos = 0;
@@ -30,12 +39,38 @@ int	get_type(const std::string str)
 		return (FLOAT);
 	if (str == "-inf" || str == "+inf" || str == "nan")
 		return (DOUBLE);
-	if (isalpha(str[0]))
+	if (!isdigit(str[0]) && str.length() == 1)
+		return (CHAR);
+	if (str.find('.') != std::string::npos && str.back() != '.')
 	{
-		if (str.length() == 1)
-			return (CHAR);
-		else
+		try
+		{
+			if (str.back() != 'f')
+				throw std::invalid_argument("no f a the end");
+			std::string modified_str = str;
+			modified_str.pop_back();
+			std::stof(modified_str, &pos);
+			if (pos == modified_str.length())
+				return FLOAT;
+		}
+		catch (const std::invalid_argument &e) {}
+		catch (const std::out_of_range &e)
+		{
+			std::cout << "input is out of range of a float\n->try with a valid float" << std::endl;
 			return (-1);
+		}
+		try
+		{
+			std::stod(str, &pos);
+			if (pos == str.length())
+				return DOUBLE;
+		}
+		catch (const std::invalid_argument &e) {}
+		catch (const std::out_of_range &e)
+		{
+			std::cout << "input is out of range of a double\n->try with a valid double" << std::endl;
+			return (-1);
+		}
 	}
 	try
 	{
@@ -44,38 +79,11 @@ int	get_type(const std::string str)
             return INT;
     }
     catch (const std::invalid_argument &e) {}
-    catch (const std::out_of_range &e)
+    catch (const std::out_of_range &e) 
 	{
-		std::cout << "input is int out of range\nInput a valid Int" << std::endl;
+		std::cout << "input is out of range of an int\n->try with a valid int" << std::endl;
 		return (-1);
 	}
-
-    try
-	{
-		if (str.back() != 'f')
-			throw std::invalid_argument("no f a the end");
-		std::string modified_str = str;
-		modified_str.pop_back();
-		std::stof(modified_str, &pos);
-		if (pos == modified_str.length())
-			return FLOAT;
-    }
-    catch (const std::invalid_argument &e) {}
-    catch (const std::out_of_range &e) {
-		std::cout << "jj" << std::endl;
-	}
-
-    try
-	{
-        std::stod(str, &pos);
-        if (pos == str.length())
-        	return DOUBLE;
-    }
-    catch (const std::invalid_argument &e) {}
-    catch (const std::out_of_range &e) {
-		std::cout << "pp" << std::endl;
-	}
-
     return (-1);
 }
 
@@ -107,12 +115,12 @@ void handle_float(const std::string str)
 		std::cout << "char: " << static_cast<char>(f) << std::endl;
 	else
 		std::cout << "char: char not printable" << std::endl;
-	if (!isnan(f) && !isinf(f))
-		std::cout << "int: " << static_cast<int>(f) << std::endl;
+	if (f > INT_MAX || f < INT_MIN || isnan(f))
+		std::cout << "int: float out of range of int" << std::endl;
 	else
-		std::cout << "int: impossible" << std::endl;
-	std::cout << "float: " << std::fixed << f << 'f' << std::endl;
-	std::cout << "double: " <<  std::fixed << std::setprecision(1) << static_cast<double>(f) << std::endl;
+		std::cout << "int: " << static_cast<int>(f) << std::endl;
+	std::cout << "float: " << std::fixed << std::setprecision(get_precision(str, FLOAT) - 1) << f << 'f' << std::endl;
+	std::cout << "double: " <<  std::fixed << std::setprecision(get_precision(str, DOUBLE) - 1) << static_cast<double>(f) << std::endl;
 }
 
 void handle_double(const std::string str)
@@ -122,12 +130,15 @@ void handle_double(const std::string str)
 		std::cout << "char: " << static_cast<char>(d) << std::endl;
 	else
 		std::cout << "char: char not printable" << std::endl;
-	if (!isnan(d) && !isinf(d))
-		std::cout << "int: " << static_cast<int>(d) << std::endl;
+	if (d > INT_MAX || d < INT_MIN || isnan(d))
+		std::cout << "int: double out of range of int" << std::endl;
 	else
-		std::cout << "int: impossible" << std::endl;
-	std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<double>(d) << 'f' << std::endl;
-	std::cout << "double: " <<  std::fixed << std::setprecision(1) << d << std::endl;
+		std::cout << "int: " << static_cast<int>(d) << std::endl;
+	if ((d > FLT_MAX || d < -FLT_MAX) && !isinf(d))
+		std::cout << "float: double out of range of float" << std::endl;
+	else
+		std::cout << "float: " << std::fixed << std::setprecision(get_precision(str, FLOAT)) << static_cast<float>(d) << 'f' << std::endl;
+	std::cout << "double: " <<  std::fixed << std::setprecision(get_precision(str, DOUBLE)) << d << std::endl;
 }
 
 void ScalarConverter::convert(std::string str)
@@ -136,19 +147,15 @@ void ScalarConverter::convert(std::string str)
 	switch(type)
 	{
 		case CHAR:
-			std::cout << "input type: char\n" << std::endl;;
 			handle_char(str);
 			break;
 		case INT:
-			std::cout << "input type: int\n" << std::endl;;
 			handle_int(str);
 			break;
 		case FLOAT:
-			std::cout << "input type: float\n" << std::endl;;
 			handle_float(str);
 			break;
 		case DOUBLE:
-			std::cout << "input type: double\n" << std::endl;;
 			handle_double(str);
 			break;
 		default:
