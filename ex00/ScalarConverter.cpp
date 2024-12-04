@@ -6,7 +6,7 @@
 /*   By: tomecker <tomecker@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:00:02 by tecker            #+#    #+#             */
-/*   Updated: 2024/12/04 00:37:26 by tomecker         ###   ########.fr       */
+/*   Updated: 2024/12/04 00:39:55 by tomecker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void handle_float(const std::string str)
 		std::cout << "char: " << static_cast<char>(f) << std::endl;
 	else
 		std::cout << "char: char not printable" << std::endl;
-	if (f > INT_MAX || f < INT_MIN || isnan(f))
+	if (f > INT_MAX || f < INT_MIN || std::isnan(f))
 		std::cout << "int: float out of range of int" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(f) << std::endl;
@@ -130,11 +130,11 @@ void handle_double(const std::string str)
 		std::cout << "char: " << static_cast<char>(d) << std::endl;
 	else
 		std::cout << "char: char not printable" << std::endl;
-	if (d > INT_MAX || d < INT_MIN || isnan(d))
+	if (d > INT_MAX || d < INT_MIN || std::isnan(d))
 		std::cout << "int: double out of range of int" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(d) << std::endl;
-	if ((d > FLT_MAX || d < -FLT_MAX) && !isinf(d))
+	if ((d > FLT_MAX || d < -FLT_MAX) && !std::isinf(d))
 		std::cout << "float: double out of range of float" << std::endl;
 	else
 		std::cout << "float: " << std::fixed << std::setprecision(get_precision(str, FLOAT)) << static_cast<float>(d) << 'f' << std::endl;
