@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tomecker <tomecker@student.42.fr>          +#+  +:+       +#+         #
+#    By: tecker <tecker@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/26 12:19:12 by tecker            #+#    #+#              #
-#    Updated: 2024/12/02 23:01:56 by tomecker         ###   ########.fr        #
+#    Updated: 2024/12/05 13:21:50 by tecker           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	convert
+NAME			=	converter
 
 CC				=	c++
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomecker <tomecker@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tecker <tecker@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:00:02 by tecker            #+#    #+#             */
-/*   Updated: 2024/12/04 00:39:55 by tomecker         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:21:26 by tecker           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ enum values
 	FLOAT,
 	DOUBLE
 };
+
+ScalarConverter::ScalarConverter()
+{
+}
+
+ScalarConverter::ScalarConverter(ScalarConverter const &src)
+{
+	if(this != &src)
+		*this = src;
+}
+
+ScalarConverter::~ScalarConverter()
+{
+}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &src)
+{
+	if(this != &src)
+		*this = src;
+	return *this;
+}
 
 int	get_precision(const std::string str, int type)
 {

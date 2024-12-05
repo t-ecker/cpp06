@@ -1,13 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Data.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tecker <tecker@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/05 13:24:17 by tecker            #+#    #+#             */
+/*   Updated: 2024/12/05 13:24:27 by tecker           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DATA_HPP
 #define DATA_HPP
-
-#include <string.h>
-#include <iostream>
-#include <cstdlib>
-#include <iomanip>
-#include <climits>
-#include <math.h>
-#include <cfloat>
 
 struct Data
 {

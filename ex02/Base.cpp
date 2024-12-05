@@ -27,10 +27,13 @@ Base * generate(void)
 	switch (values[std::rand() % 3])
 	{
 	case 0:
+		std::cout << "created A!" << std::endl;
 		return (new A());
 	case 1:
+		std::cout << "created B!" << std::endl;
 		return (new B());
 	case 2:
+		std::cout << "created C!" << std::endl;
 		return (new C());
 	default:
 		return (nullptr);

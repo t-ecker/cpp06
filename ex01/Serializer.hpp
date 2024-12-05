@@ -13,13 +13,7 @@
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
-#include <string.h>
 #include <iostream>
-// #include <cstdlib>
-// #include <iomanip>
-// #include <climits>
-// #include <math.h>
-// #include <cfloat>
 
 #include "Data.hpp"
 
@@ -28,6 +22,11 @@ class Serializer
 	public:
 		static uintptr_t serialize(Data* ptr);
 		static Data* deserialize(uintptr_t raw);
+	private:
+		Serializer();
+		Serializer(Serializer const &src);
+		~Serializer();
+		Serializer &operator=(const Serializer &src);
 };
 
 #endif
